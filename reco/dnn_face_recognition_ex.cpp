@@ -103,8 +103,8 @@ int main(void) try
     shape_predictor sp;
     deserialize("../../../data/shape_predictor_5_face_landmarks.dat") >> sp;
     // And finally we load the DNN responsible for face recognition.
-    anet_type net;
-    deserialize("../../../data/dlib_face_recognition_resnet_model_v1.dat") >> net;
+//    anet_type net;
+//    deserialize("../../../data/dlib_face_recognition_resnet_model_v1.dat") >> net;
 
 
     //load_image(img, argv[1]);
@@ -127,7 +127,7 @@ int main(void) try
         matrix<rgb_pixel> matrix;
         assign_image(matrix, cimg);
         win.clear_overlay();
-        win.set_image(matrix);
+        //win.set_image(matrix);
         faces.clear();
 
         for (auto face : detector(matrix))
@@ -138,7 +138,7 @@ int main(void) try
             faces.push_back(move(face_chip));
             // Also put some boxes on the faces so we can see that the detector is finding
             // them.
-            win.add_overlay(face);
+            //win.add_overlay(face);
         }
 
         if (faces.size() == 0)
@@ -146,6 +146,12 @@ int main(void) try
             cout << "No faces found in image!" << endl;
             continue;
         }
+        else
+        {
+            cout << "Have faces found in image!" << endl;
+            continue;
+        }
+        
 
 /*         std::vector<matrix<float,0,1>> face_descriptors = net(faces);
 
