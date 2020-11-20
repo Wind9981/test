@@ -34,7 +34,7 @@
 
 using namespace dlib;
 using namespace std;
-
+using namespace cv;
 // ----------------------------------------------------------------------------------------
 
 // The next bit of code defines a ResNet network.  It's basically copied
