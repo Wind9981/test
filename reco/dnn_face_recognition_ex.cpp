@@ -101,10 +101,10 @@ int main(void) try
     frontal_face_detector detector = get_frontal_face_detector();
     // We will also use a face landmarking model to align faces to a standard pose:  (see face_landmark_detection_ex.cpp for an introduction)
     shape_predictor sp;
-    deserialize("../../data/shape_predictor_5_face_landmarks.dat") >> sp;
+    deserialize("../../../data/shape_predictor_5_face_landmarks.dat") >> sp;
     // And finally we load the DNN responsible for face recognition.
     anet_type net;
-    deserialize("../../data/dlib_face_recognition_resnet_model_v1.dat") >> net;
+    deserialize("../../../data/dlib_face_recognition_resnet_model_v1.dat") >> net;
 
 
     //load_image(img, argv[1]);
