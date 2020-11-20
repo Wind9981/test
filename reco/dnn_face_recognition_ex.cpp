@@ -26,6 +26,12 @@
 #include <dlib/image_io.h>
 #include <dlib/image_processing/frontal_face_detector.h>
 
+#include <opencv2/core.hpp>
+#include <opencv2/videoio.hpp>
+#include <opencv2/highgui.hpp>
+#include <iostream>
+#include <stdio.h>
+
 using namespace dlib;
 using namespace std;
 
@@ -80,6 +86,31 @@ std::vector<matrix<rgb_pixel>> jitter_image(
 
 int main(int argc, char** argv) try
 {
+    Mat img,faces;
+    //--- INITIALIZE VIDEOCAPTURE
+    VideoCapture cap;
+    // open the default camera using default API
+    // cap.open(0);
+    // OR advance usage: select any API backend
+    int deviceID = 0;             // 0 = open default camera
+    int apiID = cv::CAP_ANY;      // 0 = autodetect default API
+    // open selected camera using selected API
+    cap.open(deviceID, apiID);
+    // check if we succeeded
+    if (!cap.isOpened()) {
+        cerr << "ERROR! Unable to open camera\n";
+        return -1;
+    }
+
+    while(true)
+    {
+                // wait for a new img from camera and store it into 'img'
+        cap.read(img);
+        // check if we succeeded
+        if (img.empty()) {
+            cerr << "ERROR! blank img grabbed\n";
+            break;
+        }
     if (argc != 2)
     {
         cout << "Run this example by invoking it like this: " << endl;
@@ -103,7 +134,7 @@ int main(int argc, char** argv) try
     anet_type net;
     deserialize("../../data/dlib_face_recognition_resnet_model_v1.dat") >> net;
 
-    matrix<rgb_pixel> img;
+
     load_image(img, argv[1]);
     // Display the raw image on the screen
     image_window win(img); 
@@ -111,11 +142,11 @@ int main(int argc, char** argv) try
     // Run the face detector on the image of our action heroes, and for each face extract a
     // copy that has been normalized to 150x150 pixels in size and appropriately rotated
     // and centered.
-    std::vector<matrix<rgb_pixel>> faces;
+
     for (auto face : detector(img))
     {
         auto shape = sp(img, face);
-        matrix<rgb_pixel> face_chip;
+        Mat face_chip;
         extract_image_chip(img, get_face_chip_details(shape,150,0.25), face_chip);
         faces.push_back(move(face_chip));
         // Also put some boxes on the faces so we can see that the detector is finding
@@ -188,10 +219,10 @@ int main(int argc, char** argv) try
     // If you use the model without jittering, as we did when clustering the bald guys, it
     // gets an accuracy of 99.13% on the LFW benchmark.  So jittering makes the whole
     // procedure a little more accurate but makes face descriptor calculation slower.
+    if (waitKey(5) >= 0)
+           break;
 
-
-    cout << "hit enter to terminate" << endl;
-    cin.get();
+    }
 }
 catch (std::exception& e)
 {
