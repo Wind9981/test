@@ -147,7 +147,7 @@ int main(void) try
             continue;
         }
 
-        std::vector<matrix<float,0,1>> face_descriptors = net(faces);
+/*         std::vector<matrix<float,0,1>> face_descriptors = net(faces);
 
 
         // In particular, one simple thing we can do is face clustering.  This next bit of code
@@ -205,7 +205,7 @@ int main(void) try
 
 
         cout << "hit enter to terminate" << endl;
-        cin.get();
+        cin.get(); */
         
     }
 }
