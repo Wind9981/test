@@ -82,7 +82,7 @@ std::vector<matrix<rgb_pixel>> jitter_image(
 
 // ----------------------------------------------------------------------------------------
 
-int main(int argc, char** argv) try
+int main(void) try
 {
     //--- INITIALIZE VIDEOCAPTURE
     VideoCapture cap;
