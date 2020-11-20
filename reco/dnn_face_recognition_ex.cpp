@@ -46,6 +46,14 @@ using namespace cv;
 // mini-batches were made larger (35x15 instead of 5x5), the iterations without progress
 // was set to 10000, and the training dataset consisted of about 3 million images instead of
 // 55.  Also, the input layer was locked to images of size 150.
+
+std::string gstreamer_pipeline (int capture_width, int capture_height, int display_width, int display_height, int framerate, int flip_method) {
+    return "nvarguscamerasrc ! video/x-raw(memory:NVMM), width=(int)" + std::to_string(capture_width) + ", height=(int)" +
+           std::to_string(capture_height) + ", format=(string)NV12, framerate=(fraction)" + std::to_string(framerate) +
+           "/1 ! nvvidconv flip-method=" + std::to_string(flip_method) + " ! video/x-raw, width=(int)" + std::to_string(display_width) + ", height=(int)" +
+           std::to_string(display_height) + ", format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink";
+}
+
 template <template <int,template<typename>class,int,typename> class block, int N, template<typename>class BN, typename SUBNET>
 using residual = add_prev1<block<N,BN,1,tag1<SUBNET>>>;
 
@@ -83,11 +91,25 @@ std::vector<matrix<rgb_pixel>> jitter_image(
 // ----------------------------------------------------------------------------------------
 
 int main(void) try
-{
+{   
+    int capture_width = 640 ;
+    int capture_height = 360 ;
+    int display_width = 640 ;
+    int display_height = 360 ;
+    int framerate = 21 ;
+    int flip_method = 2 ;
+
+    std::string pipeline = gstreamer_pipeline(capture_width,
+	capture_height,
+	display_width,
+	display_height,
+	framerate,
+	flip_method);
+    std::cout << "Using pipeline: \n\t" << pipeline << "\n";
+
     //--- INITIALIZE VIDEOCAPTURE
-    VideoCapture cap;
+    VideoCapture cap(pipeline, cv::CAP_GSTREAMER);
     // open selected camera using selected API
-    cap.open(0);
     // check if we succeeded
     if (!cap.isOpened()) {
         cerr << "ERROR! Unable to open camera\n";
