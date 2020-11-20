@@ -12,6 +12,6 @@ find_package(dlib REQUIRED)
 include_directories(${dlib_INCLUDE_DIRS})
 
 add_executable(face_rec dnn_face_recognition_ex.cpp)
-target_link_libraries(face_rec ${OpenCV_LIBS} ${OpenCV_LIBS} )
+target_link_libraries(face_rec ${OpenCV_LIBS} ${dlib_LIBS} )
 
 
