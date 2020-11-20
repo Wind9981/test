@@ -110,6 +110,7 @@ int main(int argc, char** argv) try
     //load_image(img, argv[1]);
     // Display the raw image on the screen
     image_window win; 
+    std::vector<matrix<rgb_pixel>> faces;
 
     // Run the face detector on the image of our action heroes, and for each face extract a
     // copy that has been normalized to 150x150 pixels in size and appropriately rotated
