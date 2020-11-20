@@ -101,7 +101,7 @@ int main(int argc, char** argv) try
     deserialize("../../data/shape_predictor_5_face_landmarks.dat") >> sp;
     // And finally we load the DNN responsible for face recognition.
     anet_type net;
-    deserialize("../../dlib_face_recognition_resnet_model_v1.dat") >> net;
+    deserialize("../../data/dlib_face_recognition_resnet_model_v1.dat") >> net;
 
     matrix<rgb_pixel> img;
     load_image(img, argv[1]);
