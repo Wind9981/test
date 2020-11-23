@@ -10,7 +10,7 @@ def faceDetect():
     face_cascade = cv2.CascadeClassifier(HAAR_CASCADE_XML_FILE_FACE)
 
     # Video Capturing class from OpenCV
-    video_capture = cv2.VideoCapture(GSTREAMER_PIPELINE, cv2.CAP_GSTREAMER)
+    video_capture = cv2.VideoCapture(0)
     if video_capture.isOpened():
         cv2.namedWindow("Face Detection Window", cv2.WINDOW_AUTOSIZE)
 
