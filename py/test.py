@@ -3,7 +3,7 @@ import numpy as np
 
 HAAR_CASCADE_XML_FILE_FACE = "/usr/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml"
 
-GSTREAMER_PIPELINE = 'nvarguscamerasrc ! video/x-raw(memory:NVMM), width=3280, height=2464, format=(string)NV12, framerate=21/1 ! nvvidconv flip-method=0 ! video/x-raw, width=960, height=616, format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink'
+GSTREAMER_PIPELINE = 'tcambin serial=50910677 ! videoscale ! video/x-raw, format=BGRx,width= 1280,height=960,framerate=20/1 ! videoconvert ! appsink'
 
 def faceDetect():
     # Obtain face detection Haar cascade XML files from OpenCV
